@@ -1,22 +1,18 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 class Solution {
     public String solution(String[] participant, String[] completion) {
-        String answer = "";
-        Map<String,Integer> map=new HashMap<>();
-        for(int i=0; i<participant.length; i++)  {
-			String name=participant[i];
-			map.put(name, map.getOrDefault(name, 0)+1);
-		}
-         for(int i=0; i<completion.length; i++)  {
-			String name=completion[i];
-			map.put(name, map.get(name)-1);
-		}
-        for(String key :map.keySet()) 
-			if(map.get(key)==1) answer=key;	
-		
+        // O(n)
+        Map<String, Integer> players = new HashMap<>();
         
-        return answer;
+        for(String p: participant) {
+            players.put(p, players.getOrDefault(p, 0) + 1);
+        }
+     	for(String c: completion) {
+            int n = players.get(c) -1 ;
+            if(n == 0) players.remove(c);
+            else players.put(c, n);
+        }
+        return players.keySet().iterator().next();
     }
 }
